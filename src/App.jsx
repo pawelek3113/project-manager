@@ -9,7 +9,7 @@ function App() {
 		projects: [],
 	});
 
-	function handleAddProject() {
+	function handleStartAddProject() {
 		setProjectsState((prevProjectsState) => {
 			return { ...prevProjectsState, selectedProjectId: null };
 		});
@@ -20,17 +20,36 @@ function App() {
 		});
 	}
 
+	function handleAddProject(projectData) {
+		setProjectsState((prevProjectsState) => {
+			const projectId = Math.random();
+			const newProject = { ...projectData, id: projectId };
+
+			return {
+				...prevProjectsState,
+				selectedProjectId: undefined,
+				projects: [...prevProjectsState.projects, newProject],
+			};
+		});
+	}
+
 	const content =
 		projectsState.selectedProjectId === null ? (
-			<NewProject onCancel={handleCancel} />
+			<NewProject
+				onCancel={handleCancel}
+				onAddProject={handleAddProject}
+			/>
 		) : (
-			<NoProjectSelected onAddingProject={handleAddProject} />
+			<NoProjectSelected onStartAddProject={handleStartAddProject} />
 		);
 
 	return (
-		<main className="h-screen w-full flex flex-col md:flex-row gap-4 md:gap-10 bg-slate-800 text-white">
-			<Navbar onAddingProject={handleAddProject} />
-			<Sidebar onAddingProject={handleAddProject} />
+		<main className="h-full w-full flex flex-col md:flex-row gap-4 md:gap-10 bg-slate-800 text-white">
+			<Navbar onStartAddProject={handleStartAddProject} />
+			<Sidebar
+				onStartAddProject={handleStartAddProject}
+				projects={projectsState.projects}
+			/>
 			<div className="flex flex-col gap-2">{content}</div>
 		</main>
 	);
