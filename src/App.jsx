@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import NewProject from "./components/NewProject";
 import NoProjectSelected from "./components/NoProjectSelected";
 import Sidebar from "./components/Sidebar";
+
 function App() {
 	const [projectsState, setProjectsState] = useState({
 		selectedProjectId: undefined,
