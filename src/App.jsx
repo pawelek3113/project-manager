@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { v4 as uuid } from "uuid";
 import Navbar from "./components/Navbar";
 import NewProject from "./components/NewProject";
 import NoProjectSelected from "./components/NoProjectSelected";
@@ -23,7 +24,7 @@ function App() {
 
 	function handleAddProject(projectData) {
 		setProjectsState((prevProjectsState) => {
-			const projectId = Math.random();
+			const projectId = uuid();
 			const newProject = { ...projectData, id: projectId };
 
 			return {
