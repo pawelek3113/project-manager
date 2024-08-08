@@ -3,8 +3,9 @@ import HideMenuIcon from "../assets/hide_menu.svg?react";
 import MenuIcon from "../assets/menu.svg?react";
 import PlusIcon from "../assets/plus.svg?react";
 import Button from "./Button";
+import ProjectListItem from "./ProjectListItem";
 
-export default function Sidebar({ onStartAddProject, projects }) {
+export default function Sidebar({ onStartAddProject, onSelect, projects }) {
 	const [sidebarVisibility, setSidebarVisibility] = useState(true);
 
 	function handleHideMenu() {
@@ -13,7 +14,13 @@ export default function Sidebar({ onStartAddProject, projects }) {
 		);
 	}
 
-	const projectsList = projects.map((project) => <ul>{project.title}</ul>);
+	const projectsList = projects.map((project) => (
+		<ProjectListItem
+			project={project}
+			onSelect={onSelect}
+			key={project.id}
+		/>
+	));
 
 	const content = sidebarVisibility ? (
 		<aside className="bg-slate-900/85 h-lvh md:w-4/12 lg:w-3/12 xl:w-2/12 max-md:hidden md:p-6 flex flex-col md:gap-6 items-center">
@@ -32,7 +39,7 @@ export default function Sidebar({ onStartAddProject, projects }) {
 				icon={<PlusIcon className="size-5" />}
 				onClick={onStartAddProject}
 			/>
-			{projectsList}
+			<div className="flex flex-col md:gap-3 w-full">{projectsList}</div>
 		</aside>
 	) : (
 		<aside className="bg-slate-900 h-lvh w-16 p-2 pt-6 flex flex-col gap-6 items-center max-md:hidden">

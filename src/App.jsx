@@ -35,15 +35,28 @@ function App() {
 		});
 	}
 
-	const content =
-		projectsState.selectedProjectId === null ? (
+	function handleSelect(id) {
+		setProjectsState((prevProjectsState) => {
+			return { ...prevProjectsState, selectedProjectId: id };
+		});
+	}
+
+	// CHUJ
+	let content;
+	if (projectsState.selectedProjectId === null) {
+		content = (
 			<NewProject
 				onCancel={handleCancel}
 				onAddProject={handleAddProject}
 			/>
-		) : (
+		);
+	} else if (projectsState.selectedProjectId === undefined) {
+		content = (
 			<NoProjectSelected onStartAddProject={handleStartAddProject} />
 		);
+	} else {
+		content = "chuj";
+	}
 
 	return (
 		<main className="h-full w-full flex flex-col md:flex-row gap-4 md:gap-10 bg-slate-800 text-white">
@@ -51,6 +64,7 @@ function App() {
 			<Sidebar
 				onStartAddProject={handleStartAddProject}
 				projects={projectsState.projects}
+				onSelect={handleSelect}
 			/>
 			<div className="flex flex-col gap-2">{content}</div>
 		</main>
