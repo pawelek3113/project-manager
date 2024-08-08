@@ -5,7 +5,12 @@ import PlusIcon from "../assets/plus.svg?react";
 import Button from "./Button";
 import ProjectListItem from "./ProjectListItem";
 
-export default function Sidebar({ onStartAddProject, onSelect, projects }) {
+export default function Sidebar({
+	onStartAddProject,
+	onSelect,
+	projects,
+	selectedProjectId,
+}) {
 	const [sidebarVisibility, setSidebarVisibility] = useState(true);
 
 	function handleHideMenu() {
@@ -19,6 +24,7 @@ export default function Sidebar({ onStartAddProject, onSelect, projects }) {
 			project={project}
 			onSelect={onSelect}
 			key={project.id}
+			selected={project.id === selectedProjectId ? true : false}
 		/>
 	));
 
@@ -39,7 +45,7 @@ export default function Sidebar({ onStartAddProject, onSelect, projects }) {
 				icon={<PlusIcon className="size-5" />}
 				onClick={onStartAddProject}
 			/>
-			<div className="flex flex-col md:gap-3 w-full">{projectsList}</div>
+			<div className="flex flex-col w-full">{projectsList}</div>
 		</aside>
 	) : (
 		<aside className="bg-slate-900 h-lvh w-16 p-2 pt-6 flex flex-col gap-6 items-center max-md:hidden">

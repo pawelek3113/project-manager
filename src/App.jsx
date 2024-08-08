@@ -3,6 +3,7 @@ import { v4 as uuid } from "uuid";
 import Navbar from "./components/Navbar";
 import NewProject from "./components/NewProject";
 import NoProjectSelected from "./components/NoProjectSelected";
+import Project from "./components/Project";
 import Sidebar from "./components/Sidebar";
 
 function App() {
@@ -54,13 +55,20 @@ function App() {
 			<NoProjectSelected onStartAddProject={handleStartAddProject} />
 		);
 	} else {
-		content = "replace in near future :)";
+		content = (
+			<Project
+				project={projectsState.projects.find(
+					(project) => project.id === projectsState.selectedProjectId
+				)}
+			/>
+		);
 	}
 
 	return (
 		<main className="h-full w-full flex flex-col md:flex-row gap-4 md:gap-10 bg-slate-800 text-white">
 			<Navbar onStartAddProject={handleStartAddProject} />
 			<Sidebar
+				selectedProjectId={projectsState.selectedProjectId}
 				onStartAddProject={handleStartAddProject}
 				projects={projectsState.projects}
 				onSelect={handleSelect}

@@ -1,7 +1,12 @@
-export default function ProjectListItem({ project, onSelect, ...props }) {
+export default function ProjectListItem({
+	project,
+	onSelect,
+	selected,
+	...props
+}) {
 	return (
 		<ul
-			className="w-full rounded-lg hover:bg-white/10 p-3 hover:cursor-pointer"
+			className={`w-full rounded-lg hover:bg-white/10 p-3 hover:cursor-pointer ${selected && "bg-white/10"}`}
 			onClick={() => onSelect(project.id)}
 			{...props}
 		>
