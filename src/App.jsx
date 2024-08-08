@@ -41,7 +41,6 @@ function App() {
 		});
 	}
 
-	// CHUJ
 	let content;
 	if (projectsState.selectedProjectId === null) {
 		content = (
