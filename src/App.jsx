@@ -54,7 +54,7 @@ function App() {
 			<NoProjectSelected onStartAddProject={handleStartAddProject} />
 		);
 	} else {
-		content = "chuj";
+		content = "replace in near future :)";
 	}
 
 	return (
