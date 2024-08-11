@@ -1,11 +1,14 @@
 import { useRef, useState } from "react";
 import AddProject from "../assets/add_project.svg?react";
+import PROJECT_ICONS from "../constants/projectIcons";
 import Button from "./Button";
 import Error from "./Error";
 import Input from "./Input";
+import ProjectIcon from "./ProjectIcon";
 import SVGContainer from "./SVGContainer";
 
 export default function NewProject({ onCancel, onAddProject }) {
+	const [selectedIconId, setSelectedIconId] = useState(PROJECT_ICONS[0].id);
 	const [error, setError] = useState(false);
 	const title = useRef();
 	const description = useRef();
@@ -21,10 +24,15 @@ export default function NewProject({ onCancel, onAddProject }) {
 				title: enteredTitle,
 				description: enteredDescription,
 				dueDate: enteredDueDate,
+				iconId: selectedIconId,
 			});
 		} else {
 			setError(true);
 		}
+	}
+
+	function handleSelectIcon(iconId) {
+		setSelectedIconId(iconId);
 	}
 
 	return (
@@ -39,6 +47,23 @@ export default function NewProject({ onCancel, onAddProject }) {
 					description="Please enter correct data"
 				/>
 			)}
+			<div className="flex flex-col gap-3">
+				<label className="uppercase text-sm font-bold text-gray-300">
+					ICON
+				</label>
+				<ul className="flex flex-row gap-4">
+					{PROJECT_ICONS.map((projIcon) => (
+						<li key={projIcon.id}>
+							<ProjectIcon
+								icon={projIcon.icon}
+								onSelectIcon={handleSelectIcon}
+								iconId={projIcon.id}
+								selected={projIcon.id === selectedIconId}
+							/>
+						</li>
+					))}
+				</ul>
+			</div>
 			<div className="flex flex-col gap-3">
 				<Input ref={title} label="Title" />
 				<Input ref={description} label="Description" textarea />

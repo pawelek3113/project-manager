@@ -24,7 +24,7 @@ export default function Sidebar({
 			project={project}
 			onSelect={onSelect}
 			key={project.id}
-			selected={project.id === selectedProjectId ? true : false}
+			selected={project.id === selectedProjectId ? true : ""}
 		/>
 	));
 
