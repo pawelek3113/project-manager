@@ -1,5 +1,4 @@
 import PROJECT_ICONS from "../constants/projectIcons";
-import SVGContainer from "./SVGContainer";
 
 export default function ProjectListItem({
 	project,
@@ -17,7 +16,13 @@ export default function ProjectListItem({
 			onClick={() => onSelect(project.id)}
 			{...props}
 		>
-			<SVGContainer SVG={projectIcon.icon} />
+			{
+				<projectIcon.icon
+					width="48"
+					height="48"
+					className="min-h-12 min-w-12"
+				/>
+			}
 			<div>
 				<h2 className="line-clamp-2">{project.title}</h2>
 				<p className="text-sm text-gray-400 line-clamp-2">

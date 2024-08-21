@@ -1,17 +1,17 @@
 import PROJECT_ICONS from "../constants/projectIcons";
-import SVGContainer from "./SVGContainer";
 
 export default function Project({ project }) {
 	const dueDate = new Date(project.dueDate);
 
 	const projectIcon = PROJECT_ICONS.find(
 		(projIcon) => projIcon.id === project.iconId
-	).icon;
+	);
+
 	return (
 		<div className="px-4 py-6 flex flex-col gap-8">
 			<div className="flex flex-row gap-4">
 				<div className="flex items-center">
-					<SVGContainer SVG={projectIcon} />
+					<projectIcon.icon width="72" height="72" />
 				</div>
 
 				<div className="gap-3 flex flex-col">

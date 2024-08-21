@@ -1,4 +1,3 @@
-import SVGContainer from "./SVGContainer";
 export default function ProjectIcon({
 	icon,
 	selected,
@@ -12,7 +11,7 @@ export default function ProjectIcon({
 			onClick={() => onSelectIcon(iconId)}
 			{...props}
 		>
-			<SVGContainer SVG={icon} />
+			{icon}
 		</div>
 	);
 }

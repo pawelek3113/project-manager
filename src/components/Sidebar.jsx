@@ -1,7 +1,8 @@
 import { useState } from "react";
-import HideMenuIcon from "../assets/hide_menu.svg?react";
-import MenuIcon from "../assets/menu.svg?react";
-import PlusIcon from "../assets/plus.svg?react";
+import HideMenuIcon from "../icons/HideMenuIcon";
+import LogoIcon from "../icons/LogoIcon";
+import MenuIcon from "../icons/MenuIcon";
+import PlusIcon from "../icons/PlusIcon";
 import Button from "./Button";
 import ProjectListItem from "./ProjectListItem";
 
@@ -33,16 +34,17 @@ export default function Sidebar({
 			<div className="flex flex-row gap-4 items-center">
 				<Button
 					onClick={handleHideMenu}
-					icon={<HideMenuIcon className="size-5" />}
+					icon={<HideMenuIcon width="20" height="20" />}
 					className="max-md:hidden"
 				/>
 				<h2 className="text-xl leading-10 text-nowrap">
 					Project Manager
 				</h2>
+				<LogoIcon />
 			</div>
 			<Button
 				text="Add project"
-				icon={<PlusIcon className="size-5" />}
+				icon={<PlusIcon width="20" height="20" />}
 				onClick={onStartAddProject}
 			/>
 			<div className="flex flex-col w-full">{projectsList}</div>
@@ -50,12 +52,12 @@ export default function Sidebar({
 	) : (
 		<aside className="bg-slate-900 h-lvh w-16 p-2 pt-6 flex flex-col gap-6 items-center max-md:hidden">
 			<Button
-				icon={<MenuIcon className="size-5" />}
+				icon={<MenuIcon width="20" height="20" />}
 				onClick={handleHideMenu}
 			/>
 
 			<Button
-				icon={<PlusIcon className="size-4" />}
+				icon={<PlusIcon width="20" height="20" />}
 				className="size-8"
 				onClick={onStartAddProject}
 			/>

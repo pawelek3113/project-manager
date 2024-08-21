@@ -1,11 +1,10 @@
 import { useRef, useState } from "react";
-import AddProject from "../assets/add_project.svg?react";
+import AddProjectIcon from "../icons/AddProjectIcon";
 import PROJECT_ICONS from "../constants/projectIcons";
 import Button from "./Button";
 import Error from "./Error";
 import Input from "./Input";
 import ProjectIcon from "./ProjectIcon";
-import SVGContainer from "./SVGContainer";
 
 export default function NewProject({ onCancel, onAddProject }) {
 	const [selectedIconId, setSelectedIconId] = useState(PROJECT_ICONS[0].id);
@@ -37,10 +36,12 @@ export default function NewProject({ onCancel, onAddProject }) {
 
 	return (
 		<div className="px-4 py-6 flex flex-col gap-5 md:w-[30rem]">
-			<SVGContainer SVG={<AddProject className="size-44" />} />
-			<h1 className="md:py-8 text-center md:text-start md:text-5xl text-lg font-bold">
-				Add a project
-			</h1>
+			<div className="flex flex-row items-center gap-5">
+				<AddProjectIcon height="124" width="124" />
+				<h1 className="md:py-8 text-center md:text-start md:text-5xl text-lg font-bold">
+					Add a project
+				</h1>
+			</div>
 			{error && (
 				<Error
 					title="Cannot save"
@@ -55,7 +56,7 @@ export default function NewProject({ onCancel, onAddProject }) {
 					{PROJECT_ICONS.map((projIcon) => (
 						<li key={projIcon.id}>
 							<ProjectIcon
-								icon={projIcon.icon}
+								icon={<projIcon.icon/>}
 								onSelectIcon={handleSelectIcon}
 								iconId={projIcon.id}
 								selected={projIcon.id === selectedIconId}
