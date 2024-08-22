@@ -12,11 +12,11 @@ export default function Sidebar({
 	projects,
 	selectedProjectId,
 }) {
-	const [sidebarVisibility, setSidebarVisibility] = useState(true);
+	const [sidebarVisible, setsidebarVisible] = useState(true);
 
 	function handleHideMenu() {
-		setSidebarVisibility((prevSidebarVisibility) =>
-			prevSidebarVisibility === true ? false : true
+		setsidebarVisible((prevsidebarVisible) =>
+			prevsidebarVisible === true ? false : true
 		);
 	}
 
@@ -26,42 +26,40 @@ export default function Sidebar({
 			onSelect={onSelect}
 			key={project.id}
 			selected={project.id === selectedProjectId ? true : ""}
+			long={sidebarVisible}
 		/>
 	));
 
-	const content = sidebarVisibility ? (
-		<aside className="bg-slate-900/85 h-lvh md:w-72 max-md:hidden md:p-6 flex flex-col md:gap-6 items-center">
+	return (
+		<aside
+			className={`bg-slate-900/85 h-lvh ${sidebarVisible ? "md:w-[288px]" : "w-[64px]"} max-md:hidden md:py-6 ${sidebarVisible ? "md:p-6" : "md:p-2"} flex flex-col md:gap-6 items-center`}
+		>
 			<div className="flex flex-row gap-4 items-center">
 				<Button
 					onClick={handleHideMenu}
-					icon={<HideMenuIcon width="20" height="20" />}
-					className="max-md:hidden"
+					icon={
+						sidebarVisible ? (
+							<HideMenuIcon width="20" height="20" />
+						) : (
+							<MenuIcon width="20" height="20" />
+						)
+					}
 				/>
-				<h2 className="text-xl leading-10 text-nowrap">
-					Project Manager
-				</h2>
-				<LogoIcon />
+				{sidebarVisible && (
+					<>
+						<h2 className="text-xl leading-10 text-nowrap">
+							Project Manager
+						</h2>
+						<LogoIcon />
+					</>
+				)}
 			</div>
 			<Button
-				text="Add project"
+				text={sidebarVisible && "Add project"}
 				icon={<PlusIcon width="20" height="20" />}
 				onClick={onStartAddProject}
 			/>
 			<div className="flex flex-col w-full gap-1">{projectsList}</div>
 		</aside>
-	) : (
-		<aside className="bg-slate-900 h-lvh w-16 p-2 pt-6 flex flex-col gap-6 items-center max-md:hidden">
-			<Button
-				icon={<MenuIcon width="20" height="20" />}
-				onClick={handleHideMenu}
-			/>
-
-			<Button
-				icon={<PlusIcon width="20" height="20" />}
-				className="size-8"
-				onClick={onStartAddProject}
-			/>
-		</aside>
 	);
-	return content;
 }
