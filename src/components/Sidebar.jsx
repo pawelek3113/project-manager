@@ -30,7 +30,7 @@ export default function Sidebar({
 	));
 
 	const content = sidebarVisibility ? (
-		<aside className="bg-slate-900/85 h-lvh md:w-4/12 lg:w-3/12 xl:w-2/12 max-md:hidden md:p-6 flex flex-col md:gap-6 items-center">
+		<aside className="bg-slate-900/85 h-lvh md:w-72 max-md:hidden md:p-6 flex flex-col md:gap-6 items-center">
 			<div className="flex flex-row gap-4 items-center">
 				<Button
 					onClick={handleHideMenu}
@@ -47,7 +47,7 @@ export default function Sidebar({
 				icon={<PlusIcon width="20" height="20" />}
 				onClick={onStartAddProject}
 			/>
-			<div className="flex flex-col w-full">{projectsList}</div>
+			<div className="flex flex-col w-full gap-1">{projectsList}</div>
 		</aside>
 	) : (
 		<aside className="bg-slate-900 h-lvh w-16 p-2 pt-6 flex flex-col gap-6 items-center max-md:hidden">
