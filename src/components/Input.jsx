@@ -7,6 +7,8 @@ const Input = forwardRef(function Input(
 	const VARIANTS = {
 		default:
 			"border rounded-lg focus:outline-none focus:outline-green-400 text-black p-1",
+		outline:
+			"bg-transparent border rounded-xl focus:outline-none focus:outline-green-400 p-1",
 		ghost: "bg-transparent outline-none p-1",
 	};
 
@@ -22,12 +24,18 @@ const Input = forwardRef(function Input(
 				""
 			)}
 			{!textarea ? (
-				<input ref={ref} className={chosenVariant} {...props} />
+				<input
+					ref={ref}
+					className={chosenVariant}
+					{...props}
+					spellCheck="false"
+				></input>
 			) : (
 				<textarea
 					ref={ref}
 					className={chosenVariant}
 					{...props}
+					spellCheck="false"
 				></textarea>
 			)}
 		</p>

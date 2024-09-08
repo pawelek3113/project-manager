@@ -12,14 +12,7 @@ function App() {
 		projects: [],
 	});
 
-	let selectedProj = "";
-	if (projectsState.selectedProjectId) {
-		selectedProj = projectsState.projects.find(
-			(project) => project.id === projectsState.selectedProjectId
-		);
-	}
-
-	const [title, setTitle] = useState(selectedProj.title);
+	const [editing, setEditing] = useState(false);
 
 	function handleStartAddProject() {
 		setProjectsState((prevProjectsState) => {
@@ -46,27 +39,27 @@ function App() {
 	}
 
 	function handleSelect(id) {
+		setEditing(false);
 		setProjectsState((prevProjectsState) => {
 			return { ...prevProjectsState, selectedProjectId: id };
 		});
 	}
 
-	function handleTitleChange(e, projectData) {
-		let enteredTitle = e.target.value;
-		setTitle(enteredTitle);
+	function handleEditSave(projectData) {
+		setEditing(false);
 		setProjectsState((prevProjectsState) => {
-			const updatedProjects = prevProjectsState.projects.map(
-				(project) => {
-					if (project.id === projectData.id) {
-						return { ...project, title: enteredTitle };
-					}
-					return project;
+			const updatedProjects = prevProjectsState.projects.map((p) => {
+				if (p.id === projectData.id) {
+					return {
+						...p,
+						title: projectData.title.trim(),
+						description: projectData.description.trim(),
+						dueDate: projectData.dueDate,
+					};
 				}
-			);
-			return {
-				...prevProjectsState,
-				projects: updatedProjects,
-			};
+				return p;
+			});
+			return { ...prevProjectsState, projects: updatedProjects };
 		});
 	}
 
@@ -88,8 +81,9 @@ function App() {
 				project={projectsState.projects.find(
 					(project) => project.id === projectsState.selectedProjectId
 				)}
-				title={selectedProj.title}
-				onTitleChange={handleTitleChange}
+				onEditSave={handleEditSave}
+				editing={editing}
+				setEditing={setEditing}
 			/>
 		);
 	}
@@ -103,7 +97,7 @@ function App() {
 				projects={projectsState.projects}
 				onSelect={handleSelect}
 			/>
-			<div className="flex flex-col gap-2">{content}</div>
+			<div className="flex flex-col gap-2 w-full">{content}</div>
 		</main>
 	);
 }
