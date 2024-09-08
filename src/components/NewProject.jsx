@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
-import AddProjectIcon from "../icons/AddProjectIcon";
 import PROJECT_ICONS from "../constants/projectIcons";
+import AddProjectIcon from "../icons/AddProjectIcon";
 import Button from "./Button";
 import Error from "./Error";
 import Input from "./Input";
@@ -12,6 +12,9 @@ export default function NewProject({ onCancel, onAddProject }) {
 	const title = useRef();
 	const description = useRef();
 	const dueDate = useRef();
+
+	const defaultDate = new Date(Date.now() + 7 * 24 * 3600 * 1000);
+	const formattedDate = defaultDate.toISOString().split("T")[0];
 
 	function handleSave() {
 		const enteredTitle = title.current.value;
@@ -56,7 +59,7 @@ export default function NewProject({ onCancel, onAddProject }) {
 					{PROJECT_ICONS.map((projIcon) => (
 						<li key={projIcon.id}>
 							<ProjectIcon
-								icon={<projIcon.icon/>}
+								icon={<projIcon.icon />}
 								onSelectIcon={handleSelectIcon}
 								iconId={projIcon.id}
 								selected={projIcon.id === selectedIconId}
@@ -68,7 +71,12 @@ export default function NewProject({ onCancel, onAddProject }) {
 			<div className="flex flex-col gap-3">
 				<Input ref={title} label="Title" />
 				<Input ref={description} label="Description" textarea />
-				<Input ref={dueDate} label="Due Date" type="date" />
+				<Input
+					ref={dueDate}
+					label="Due Date"
+					type="date"
+					defaultValue={formattedDate}
+				/>
 			</div>
 			<menu className="flex flex-row gap-4 justify-end items-center">
 				<li>

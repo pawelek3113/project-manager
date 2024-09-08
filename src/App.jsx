@@ -12,6 +12,8 @@ function App() {
 		projects: [],
 	});
 
+	const [editing, setEditing] = useState(false);
+
 	function handleStartAddProject() {
 		setProjectsState((prevProjectsState) => {
 			return { ...prevProjectsState, selectedProjectId: null };
@@ -37,8 +39,27 @@ function App() {
 	}
 
 	function handleSelect(id) {
+		setEditing(false);
 		setProjectsState((prevProjectsState) => {
 			return { ...prevProjectsState, selectedProjectId: id };
+		});
+	}
+
+	function handleEditSave(projectData) {
+		setEditing(false);
+		setProjectsState((prevProjectsState) => {
+			const updatedProjects = prevProjectsState.projects.map((p) => {
+				if (p.id === projectData.id) {
+					return {
+						...p,
+						title: projectData.title.trim(),
+						description: projectData.description.trim(),
+						dueDate: projectData.dueDate,
+					};
+				}
+				return p;
+			});
+			return { ...prevProjectsState, projects: updatedProjects };
 		});
 	}
 
@@ -60,6 +81,9 @@ function App() {
 				project={projectsState.projects.find(
 					(project) => project.id === projectsState.selectedProjectId
 				)}
+				onEditSave={handleEditSave}
+				editing={editing}
+				setEditing={setEditing}
 			/>
 		);
 	}
@@ -73,7 +97,7 @@ function App() {
 				projects={projectsState.projects}
 				onSelect={handleSelect}
 			/>
-			<div className="flex flex-col gap-2">{content}</div>
+			<div className="flex flex-col gap-2 w-full">{content}</div>
 		</main>
 	);
 }

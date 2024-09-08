@@ -26,9 +26,19 @@ export default function ProjectListItem({
 			}
 			{long && (
 				<div>
-					<h2 className="line-clamp-2">{project.title}</h2>
-					<p className="text-sm text-gray-400 line-clamp-2">
-						{project.description}
+					<h2
+						className={`line-clamp-2 break-all ${!project.title && "italic"}`}
+					>
+						{project.title
+							? project.title
+							: "Title's not specified"}
+					</h2>
+					<p
+						className={`text-sm text-gray-400 line-clamp-2 ${!project.description && "italic"}`}
+					>
+						{project.description
+							? project.description
+							: "Description's not specified"}
 					</p>
 				</div>
 			)}
