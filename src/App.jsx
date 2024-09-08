@@ -12,6 +12,15 @@ function App() {
 		projects: [],
 	});
 
+	let selectedProj = "";
+	if (projectsState.selectedProjectId) {
+		selectedProj = projectsState.projects.find(
+			(project) => project.id === projectsState.selectedProjectId
+		);
+	}
+
+	const [title, setTitle] = useState(selectedProj.title);
+
 	function handleStartAddProject() {
 		setProjectsState((prevProjectsState) => {
 			return { ...prevProjectsState, selectedProjectId: null };
@@ -42,6 +51,25 @@ function App() {
 		});
 	}
 
+	function handleTitleChange(e, projectData) {
+		let enteredTitle = e.target.value;
+		setTitle(enteredTitle);
+		setProjectsState((prevProjectsState) => {
+			const updatedProjects = prevProjectsState.projects.map(
+				(project) => {
+					if (project.id === projectData.id) {
+						return { ...project, title: enteredTitle };
+					}
+					return project;
+				}
+			);
+			return {
+				...prevProjectsState,
+				projects: updatedProjects,
+			};
+		});
+	}
+
 	let content;
 	if (projectsState.selectedProjectId === null) {
 		content = (
@@ -60,6 +88,8 @@ function App() {
 				project={projectsState.projects.find(
 					(project) => project.id === projectsState.selectedProjectId
 				)}
+				title={selectedProj.title}
+				onTitleChange={handleTitleChange}
 			/>
 		);
 	}
