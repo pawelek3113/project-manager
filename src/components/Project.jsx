@@ -14,8 +14,6 @@ export default function Project({ project, onEditSave, editing, setEditing }) {
 	const description = useRef();
 	const dueDateRef = useRef();
 
-	console.log(project);
-
 	return (
 		<section className="flex flex-row justify-between w-full">
 			<article
@@ -98,7 +96,7 @@ export default function Project({ project, onEditSave, editing, setEditing }) {
 					/>
 				)}
 			</article>
-			<p className="pr-5 pt-5">
+			<article className="pr-5 pt-5">
 				{!editing ? (
 					<Button
 						text="Edit"
@@ -121,7 +119,7 @@ export default function Project({ project, onEditSave, editing, setEditing }) {
 						className="border-0"
 					/>
 				)}
-			</p>
+			</article>
 		</section>
 	);
 }
