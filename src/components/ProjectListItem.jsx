@@ -13,7 +13,7 @@ export default function ProjectListItem({
 
 	return (
 		<ul
-			className={`w-full rounded-lg hover:bg-white/10 p-3 hover:cursor-pointer flex flex-row gap-5 ${selected && "bg-white/10"} ${!long && "justify-center"}`}
+			className={`w-full rounded-lg hover:bg-white/10 p-3 hover:cursor-pointer flex flex-row gap-5 items-center ${selected && "bg-white/10"} ${!long && "justify-center"}`}
 			onClick={() => onSelect(project.id)}
 			{...props}
 		>
@@ -25,9 +25,9 @@ export default function ProjectListItem({
 				/>
 			}
 			{long && (
-				<div>
+				<div className="w-8/12">
 					<h2
-						className={`line-clamp-2 break-all ${!project.title && "italic"}`}
+						className={`line-clamp-2 break-words ${!project.title && "italic"}`}
 					>
 						{project.title
 							? project.title
