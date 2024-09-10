@@ -27,6 +27,7 @@ export default function NewProject({ onCancel, onAddProject }) {
 				description: enteredDescription,
 				dueDate: enteredDueDate,
 				iconId: selectedIconId,
+				tasks: []
 			});
 		} else {
 			setError(true);

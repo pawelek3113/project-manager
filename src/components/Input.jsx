@@ -6,10 +6,10 @@ const Input = forwardRef(function Input(
 ) {
 	const VARIANTS = {
 		default:
-			"border rounded-lg focus:outline-none focus:outline-green-400 text-black p-1",
+			"border rounded-lg focus:outline-none focus:outline-green-400 text-black py-1 px-3",
 		outline:
-			"bg-transparent border rounded-xl focus:outline-none focus:outline-green-400 p-1",
-		ghost: "bg-transparent outline-none p-1",
+			"bg-transparent border rounded-xl focus:outline-none focus:outline-green-400 py-1 px-3",
+		ghost: "bg-transparent outline-none py-1 px-3",
 	};
 
 	let chosenVariant = `${VARIANTS[variant]} ${className && className}`;

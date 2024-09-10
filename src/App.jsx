@@ -12,7 +12,8 @@ function App() {
 		projects: [],
 	});
 
-	const [editing, setEditing] = useState(false);
+	const [projectEditing, setProjectEditing] = useState(false);
+	const [addingProjectTask, setAddingProjectTask] = useState(false);
 
 	function handleStartAddProject() {
 		setProjectsState((prevProjectsState) => {
@@ -39,14 +40,15 @@ function App() {
 	}
 
 	function handleSelect(id) {
-		setEditing(false);
+		setProjectEditing(false);
+		setAddingProjectTask(false);
 		setProjectsState((prevProjectsState) => {
 			return { ...prevProjectsState, selectedProjectId: id };
 		});
 	}
 
 	function handleEditSave(projectData) {
-		setEditing(false);
+		setProjectEditing(false);
 		setProjectsState((prevProjectsState) => {
 			const updatedProjects = prevProjectsState.projects.map((p) => {
 				if (p.id === projectData.id) {
@@ -61,6 +63,22 @@ function App() {
 			});
 			return { ...prevProjectsState, projects: updatedProjects };
 		});
+	}
+
+	function handleAddProjectTask(projectData) {
+		setAddingProjectTask(false)
+		setProjectsState((prevProjectsState) => {
+			const updatedProjects = prevProjectsState.projects.map((p) => {
+				if (p.id === projectData.id){
+					return {
+						...p,
+						tasks: projectData.tasks
+					}
+				}
+				return p
+			});
+			return {...prevProjectsState, projects: updatedProjects}
+		})
 	}
 
 	let content;
@@ -82,8 +100,11 @@ function App() {
 					(project) => project.id === projectsState.selectedProjectId
 				)}
 				onEditSave={handleEditSave}
-				editing={editing}
-				setEditing={setEditing}
+				editing={projectEditing}
+				setEditing={setProjectEditing}
+				addingTask={addingProjectTask}
+				setAddingTask={setAddingProjectTask}
+				onTaskAdd={handleAddProjectTask}
 			/>
 		);
 	}

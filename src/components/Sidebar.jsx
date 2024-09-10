@@ -32,7 +32,7 @@ export default function Sidebar({
 
 	return (
 		<aside
-			className={`bg-slate-900/85 h-lvh ${sidebarVisible ? "md:w-[288px]" : "w-[64px]"} max-md:hidden md:py-6 ${sidebarVisible ? "md:p-6" : "md:p-2"} flex flex-col md:gap-6 items-center`}
+			className={`bg-slate-900/85 min-h-screen ${sidebarVisible ? "md:w-[288px]" : "w-[64px]"} max-md:hidden md:py-6 ${sidebarVisible ? "md:p-6" : "md:p-2"} flex flex-col md:gap-6 items-center`}
 		>
 			<div className="flex flex-row gap-4 items-center">
 				<Button
