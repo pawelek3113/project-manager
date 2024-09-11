@@ -3,6 +3,7 @@ import { v4 as uuid } from "uuid";
 import PROJECT_ICONS from "../constants/projectIcons";
 import PlusIcon from "../icons/PlusIcon";
 import Button from "./Button";
+import Error from "./Error";
 import Input from "./Input";
 import TaskListItem from "./TaskListItem";
 
@@ -20,6 +21,7 @@ export default function Project({
   const dueDateRef = useRef();
   const taskTitle = useRef();
   const taskDescription = useRef();
+  const error = useRef();
 
   function handleTaskSave() {
     if (taskTitle.current.value && taskDescription.current.value) {
@@ -35,6 +37,8 @@ export default function Project({
           },
         ],
       });
+    } else {
+      error.current.show()
     }
   }
 
@@ -72,6 +76,12 @@ export default function Project({
             : "";
         }}
       >
+        <Error
+          ref={error}
+          title="Unable to save"
+          description="All required fields must be filled out before saving."
+        />
+
         <div className="flex flex-row gap-4">
           <div className="flex items-center">
             <projectIcon.icon width="72" height="72" />
