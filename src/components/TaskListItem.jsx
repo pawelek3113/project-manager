@@ -5,7 +5,7 @@ export default function TaskListItem({ title, description, status }) {
         <h1 className="max-w-full truncate text-lg font-bold tracking-tight">
           {title}
         </h1>
-        <p>{description}</p>
+        <p className="line-clamp-2">{description}</p>
       </div>
       <p
         className={`flex h-3/4 w-3/12 items-center justify-center rounded-3xl text-center text-sm ${status === "Not started" ? "border" : status === "In progress" ? "bg-yellow-500" : "bg-green-400"}`}

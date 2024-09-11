@@ -130,7 +130,7 @@ export default function Project({
             ref={description}
             defaultValue={project.description}
             textarea
-            className="h-80"
+            className="h-80 w-2/3"
             label="description"
           />
         )}
@@ -142,7 +142,7 @@ export default function Project({
             <Button
               text="Add task..."
               icon={<PlusIcon width="15" height="15" />}
-              className="border-0"
+              className="border-0 hover:text-green-400"
               onClick={() => {
                 setAddingTask(true);
               }}
