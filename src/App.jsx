@@ -33,7 +33,7 @@ function App() {
 
       return {
         ...prevProjectsState,
-        selectedProjectId: undefined,
+        selectedProjectId: projectId,
         projects: [...prevProjectsState.projects, newProject],
       };
     });
