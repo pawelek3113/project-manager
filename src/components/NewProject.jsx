@@ -8,10 +8,11 @@ import ProjectIcon from "./ProjectIcon";
 
 export default function NewProject({ onCancel, onAddProject }) {
   const [selectedIconId, setSelectedIconId] = useState(PROJECT_ICONS[0].id);
-  const [error, setError] = useState(false);
   const title = useRef();
   const description = useRef();
   const dueDate = useRef();
+
+  const error = useRef();
 
   const defaultDate = new Date(Date.now() + 7 * 24 * 3600 * 1000);
   const formattedDate = defaultDate.toISOString().split("T")[0];
@@ -30,7 +31,7 @@ export default function NewProject({ onCancel, onAddProject }) {
         tasks: [],
       });
     } else {
-      setError(true);
+      error.current.show();
     }
   }
 
@@ -46,9 +47,13 @@ export default function NewProject({ onCancel, onAddProject }) {
           Add a project
         </h1>
       </div>
-      {error && (
-        <Error title="Cannot save" description="Please enter correct data" />
-      )}
+
+      <Error
+        ref={error}
+        title="Unable to save"
+        description="All required fields must be filled out before saving."
+      />
+
       <div className="flex flex-col gap-3">
         <label className="text-sm font-bold uppercase text-gray-300">
           ICON

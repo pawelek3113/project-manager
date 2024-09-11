@@ -1,8 +1,26 @@
-export default function Error({ title, description }) {
+import { forwardRef, useImperativeHandle, useRef } from "react";
+import Modal from "./Modal";
+
+const Error = forwardRef(function Error({ title, description }, ref) {
+  const modal = useRef();
+
+  useImperativeHandle(ref, () => {
+    return {
+      show() {
+        modal.current.open();
+      },
+      hide() {
+        modal.current.close();
+      },
+    };
+  });
+
   return (
-    <div className="rounded-md border-4 border-red-600 p-4 text-center font-bold text-red-600">
-      <h2 className="text-lg">{title}</h2>
+    <Modal ref={modal} buttonCaption="Okay">
+      <h1 className="text-lg font-bold tracking-tight text-red-600">{title}</h1>
       <p className="text-sm">{description}</p>
-    </div>
+    </Modal>
   );
-}
+});
+
+export default Error;
