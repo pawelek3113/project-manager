@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { v4 as uuid } from "uuid";
 import PROJECT_ICONS from "../constants/projectIcons";
+import TASK_STATUSES from "../constants/taskStatuses";
 import PlusIcon from "../icons/PlusIcon";
 import Button from "./Button";
 import Error from "./Error";
@@ -15,6 +16,7 @@ export default function Project({
   addingTask,
   setAddingTask,
   onTaskAdd,
+  onTaskUpdate,
 }) {
   const title = useRef();
   const description = useRef();
@@ -32,23 +34,31 @@ export default function Project({
           {
             taskTitle: taskTitle.current.value,
             taskDescription: taskDescription.current.value,
-            taskStatus: "Not started",
+            taskStatus: TASK_STATUSES.not_started,
             taskId: uuid(),
           },
         ],
       });
     } else {
-      error.current.show()
+      error.current.show();
     }
   }
 
+  function handleTaskUpdate(taskData) {
+    const updatedTasks = project.tasks.map((t) => {
+      console.log("project.jsx t", t);
+      console.log("project.jsx taskData", taskData);
+
+      if (t.taskId === taskData.taskId) {
+        return { ...taskData };
+      }
+      return t;
+    });
+    onTaskUpdate({ ...project, tasks: [...updatedTasks] });
+  }
+
   const tasksList = project.tasks.map((t) => (
-    <TaskListItem
-      key={t.taskId}
-      title={t.taskTitle}
-      description={t.taskDescription}
-      status={t.taskStatus}
-    />
+    <TaskListItem key={t.taskId} task={t} onTaskUpdate={handleTaskUpdate} />
   ));
 
   const dueDate = new Date(project.dueDate);
