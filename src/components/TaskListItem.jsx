@@ -1,11 +1,14 @@
 import { useState } from "react";
 import TaskStatus from "./TaskStatus";
 
-export default function TaskListItem({ task, onTaskUpdate }) {
+export default function TaskListItem({ task, onTaskUpdate, ...props }) {
   const [selectedStatus, setSelectedStatus] = useState(task.taskStatus);
 
   return (
-    <li className="flex w-full flex-row items-center justify-between rounded-lg px-4 py-2 hover:cursor-pointer hover:bg-white/10">
+    <li
+      className="flex w-full flex-row items-center justify-between rounded-lg px-4 py-2 hover:cursor-pointer hover:bg-white/10"
+      {...props}
+    >
       <div className="flex w-9/12 flex-col">
         <h1 className="max-w-full truncate text-lg font-bold tracking-tight">
           {task.taskTitle}

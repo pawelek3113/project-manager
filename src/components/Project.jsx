@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { v4 as uuid } from "uuid";
 import PROJECT_ICONS from "../constants/projectIcons";
 import TASK_STATUSES from "../constants/taskStatuses";
@@ -6,6 +6,7 @@ import PlusIcon from "../icons/PlusIcon";
 import Button from "./Button";
 import Error from "./Error";
 import Input from "./Input";
+import Task from "./Task";
 import TaskListItem from "./TaskListItem";
 
 export default function Project({
@@ -18,12 +19,15 @@ export default function Project({
   onTaskAdd,
   onTaskUpdate,
 }) {
+  const [currentTask, setCurrentTask] = useState(undefined);
+
   const title = useRef();
   const description = useRef();
   const dueDateRef = useRef();
   const taskTitle = useRef();
   const taskDescription = useRef();
   const error = useRef();
+  const taskModal = useRef();
 
   function handleTaskSave() {
     if (taskTitle.current.value && taskDescription.current.value) {
@@ -46,9 +50,6 @@ export default function Project({
 
   function handleTaskUpdate(taskData) {
     const updatedTasks = project.tasks.map((t) => {
-      console.log("project.jsx t", t);
-      console.log("project.jsx taskData", taskData);
-
       if (t.taskId === taskData.taskId) {
         return { ...taskData };
       }
@@ -58,7 +59,15 @@ export default function Project({
   }
 
   const tasksList = project.tasks.map((t) => (
-    <TaskListItem key={t.taskId} task={t} onTaskUpdate={handleTaskUpdate} />
+    <TaskListItem
+      key={t.taskId}
+      task={t}
+      onTaskUpdate={handleTaskUpdate}
+      onClick={() => {
+        setCurrentTask(t);
+        taskModal.current.open();
+      }}
+    />
   ));
 
   const dueDate = new Date(project.dueDate);
@@ -91,6 +100,15 @@ export default function Project({
           title="Unable to save"
           description="All required fields must be filled out before saving."
         />
+
+        {currentTask ? (
+          <Task ref={taskModal} task={currentTask} />
+        ) : (
+          <Task
+            ref={taskModal}
+            task={{ taskTitle: "None", taskDescription: "None" }}
+          />
+        )}
 
         <div className="flex flex-row gap-4">
           <div className="flex items-center">
