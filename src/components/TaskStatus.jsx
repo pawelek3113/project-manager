@@ -21,7 +21,6 @@ export default function TaskStatus({
         setSelectedStatus(e.target.value);
         onTaskUpdate({ ...task, taskStatus: e.target.value });
       }}
-      defaultValue={task.taskStatus}
       className={`w-3/12 rounded-lg text-center text-sm ${selectedStatus === "Not started" ? "bg-transparent" : selectedStatus === "In progress" ? "bg-yellow-500" : "bg-green-400"}`}
     >
       {statuses}
