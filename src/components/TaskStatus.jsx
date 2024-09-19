@@ -1,11 +1,9 @@
+import { useEffect, useState } from "react";
 import TASK_STATUSES from "../constants/taskStatuses";
 
-export default function TaskStatus({
-  task,
-  selectedStatus,
-  setSelectedStatus,
-  onTaskUpdate,
-}) {
+export default function TaskStatus({ task, onTaskUpdate, className }) {
+  const [selectedStatus, setSelectedStatus] = useState(task.taskStatus);
+
   const statuses = Object.entries(TASK_STATUSES).map(([k, v]) => {
     return (
       <option key={k} value={v}>
@@ -14,14 +12,24 @@ export default function TaskStatus({
     );
   });
 
+  useEffect(() => {
+    setSelectedStatus(task.taskStatus);
+  }, [task]);
+
+  const handleStatusChange = (e) => {
+    const newStatus = e.target.value;
+    setSelectedStatus(newStatus);
+    onTaskUpdate({ ...task, taskStatus: newStatus });
+  };
+
   return (
     <select
       value={selectedStatus}
-      onChange={(e) => {
-        setSelectedStatus(e.target.value);
-        onTaskUpdate({ ...task, taskStatus: e.target.value });
+      onClick={(e) => {
+        e.stopPropagation();
       }}
-      className={`w-3/12 rounded-lg text-center text-sm ${selectedStatus === "Not started" ? "bg-transparent" : selectedStatus === "In progress" ? "bg-yellow-500" : "bg-green-400"}`}
+      onChange={(e) => handleStatusChange(e)}
+      className={`rounded-lg text-center text-sm ${selectedStatus === "Not started" ? "bg-transparent" : selectedStatus === "In progress" ? "bg-yellow-500" : "bg-green-400"} ${className}`}
     >
       {statuses}
     </select>

@@ -72,7 +72,7 @@ function App() {
         if (p.id === projectData.id) {
           return {
             ...p,
-            tasks: projectData.tasks,
+            tasks: [...projectData.tasks],
           };
         }
         return p;
