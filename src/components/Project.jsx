@@ -1,10 +1,12 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { v4 as uuid } from "uuid";
 import PROJECT_ICONS from "../constants/projectIcons";
+import TASK_STATUSES from "../constants/taskStatuses";
 import PlusIcon from "../icons/PlusIcon";
 import Button from "./Button";
 import Error from "./Error";
 import Input from "./Input";
+import Task from "./Task";
 import TaskListItem from "./TaskListItem";
 
 export default function Project({
@@ -15,13 +17,17 @@ export default function Project({
   addingTask,
   setAddingTask,
   onTaskAdd,
+  onTaskUpdate,
 }) {
+  const [selectedTask, setSelectedTask] = useState(null);
+
   const title = useRef();
   const description = useRef();
   const dueDateRef = useRef();
   const taskTitle = useRef();
   const taskDescription = useRef();
   const error = useRef();
+  const taskModal = useRef();
 
   function handleTaskSave() {
     if (taskTitle.current.value && taskDescription.current.value) {
@@ -32,22 +38,35 @@ export default function Project({
           {
             taskTitle: taskTitle.current.value,
             taskDescription: taskDescription.current.value,
-            taskStatus: "Not started",
+            taskStatus: TASK_STATUSES.not_started,
             taskId: uuid(),
           },
         ],
       });
     } else {
-      error.current.show()
+      error.current.show();
     }
+  }
+
+  function handleTaskUpdate(taskData) {
+    const updatedTasks = project.tasks.map((t) => {
+      if (t.taskId === taskData.taskId) {
+        return { ...taskData };
+      }
+      return t;
+    });
+    onTaskUpdate({ ...project, tasks: [...updatedTasks] });
   }
 
   const tasksList = project.tasks.map((t) => (
     <TaskListItem
       key={t.taskId}
-      title={t.taskTitle}
-      description={t.taskDescription}
-      status={t.taskStatus}
+      task={t}
+      onTaskUpdate={handleTaskUpdate}
+      onClick={() => {
+        setSelectedTask(t);
+        taskModal.current.open();
+      }}
     />
   ));
 
@@ -81,6 +100,26 @@ export default function Project({
           title="Unable to save"
           description="All required fields must be filled out before saving."
         />
+
+        {selectedTask ? (
+          <Task
+            ref={taskModal}
+            task={selectedTask}
+            onTaskUpdate={handleTaskUpdate}
+            setSelectedTask={setSelectedTask}
+          />
+        ) : (
+          <Task
+            ref={taskModal}
+            task={{
+              taskTitle: "None",
+              taskDescription: "None",
+              taskStatus: TASK_STATUSES.not_started,
+            }}
+            onTaskUpdate={handleTaskUpdate}
+            setSelectedTask={setSelectedTask}
+          />
+        )}
 
         <div className="flex flex-row gap-4">
           <div className="flex items-center">
@@ -146,7 +185,8 @@ export default function Project({
         )}
         <div className="flex w-2/3 flex-col items-start gap-4">
           <h2 className="text-2xl font-bold uppercase tracking-tighter">
-            Project tasks
+            Project tasks{" "}
+            {project.tasks.length ? `(${project.tasks.length})` : ""}
           </h2>
           {!addingTask ? (
             <Button
@@ -161,7 +201,12 @@ export default function Project({
             <div className="flex w-full max-w-xl flex-col gap-2 rounded-lg border px-8 py-4">
               <h3 className="font-bold tracking-tighter">Adding a task</h3>
               <div className="flex w-full flex-col">
-                <Input variant="ghost" placeholder="Title" ref={taskTitle} />
+                <Input
+                  variant="ghost"
+                  placeholder="Title"
+                  ref={taskTitle}
+                  autocomplete="off"
+                />
                 <Input
                   variant="ghost"
                   placeholder="Description"

@@ -72,8 +72,20 @@ function App() {
         if (p.id === projectData.id) {
           return {
             ...p,
-            tasks: projectData.tasks,
+            tasks: [...projectData.tasks],
           };
+        }
+        return p;
+      });
+      return { ...prevProjectsState, projects: updatedProjects };
+    });
+  }
+
+  function handleUpdateProjectTasks(projectData) {
+    setProjectsState((prevProjectsState) => {
+      const updatedProjects = prevProjectsState.projects.map((p) => {
+        if (p.id === projectData.id) {
+          return { ...p, tasks: [...projectData.tasks] };
         }
         return p;
       });
@@ -100,6 +112,7 @@ function App() {
         addingTask={addingProjectTask}
         setAddingTask={setAddingProjectTask}
         onTaskAdd={handleAddProjectTask}
+        onTaskUpdate={handleUpdateProjectTasks}
       />
     );
   }
