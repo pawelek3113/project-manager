@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { v4 as uuid } from "uuid";
 import PROJECT_ICONS from "../constants/projectIcons";
 import TASK_STATUSES from "../constants/taskStatuses";
@@ -32,6 +32,10 @@ export default function Project({
   const error = useRef();
   const taskModal = useRef();
   const projectDeletionModal = useRef();
+
+  useEffect(() => {
+    setAddingTask(false);
+  }, [project]);
 
   function handleTaskSave() {
     if (taskTitle.current.value && taskDescription.current.value) {
@@ -126,6 +130,7 @@ export default function Project({
             ref={taskModal}
             task={selectedTask}
             onTaskUpdate={handleTaskUpdate}
+            onTaskDelete={handleTaskDeletion}
             setSelectedTask={setSelectedTask}
           />
         ) : (
@@ -137,6 +142,7 @@ export default function Project({
               taskStatus: TASK_STATUSES.not_started,
             }}
             onTaskUpdate={handleTaskUpdate}
+            onTaskDelete={handleTaskDeletion}
             setSelectedTask={setSelectedTask}
           />
         )}
