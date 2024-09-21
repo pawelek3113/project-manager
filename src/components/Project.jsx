@@ -20,7 +20,7 @@ export default function Project({
   setAddingTask,
   onTaskAdd,
   onTaskUpdate,
-  onDelete
+  onDelete,
 }) {
   const [selectedTask, setSelectedTask] = useState(null);
 
@@ -111,7 +111,7 @@ export default function Project({
               <h1 className="text-lg font-bold leading-10 tracking-tight">
                 You're about to delete your project
               </h1>
-              <h2 className="">Do you want to proceed?</h2>
+              <h2>Do you want to proceed?</h2>
             </div>
             <div className="w-3/4">
               <form method="dialog">
@@ -121,7 +121,9 @@ export default function Project({
                     text="Yes"
                     type="submit"
                     className="border-red-800 font-bold text-red-800"
-                    onClick={() => {onDelete(project)}}
+                    onClick={() => {
+                      onDelete(project);
+                    }}
                   />
                 </div>
               </form>
