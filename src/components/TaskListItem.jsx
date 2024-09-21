@@ -12,10 +12,7 @@ export default function TaskListItem({ task, onTaskUpdate, ...props }) {
         </h1>
         <p className="line-clamp-2">{task.taskDescription}</p>
       </div>
-      <TaskStatus
-        task={task}
-        onTaskUpdate={onTaskUpdate}
-      />
+      <TaskStatus task={task} onTaskUpdate={onTaskUpdate} />
     </li>
   );
 }

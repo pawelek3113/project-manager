@@ -23,13 +23,13 @@ const Task = forwardRef(function Task(
   return (
     <Modal ref={modal} custom className="h-3/4 w-1/2">
       <div className="flex h-full w-full flex-col justify-between gap-3">
-        <div className="flex flex-row justify-between items-center">
-          <div className="flex flex-col gap-2 w-full">
+        <div className="flex flex-row items-center justify-between">
+          <div className="flex w-full flex-col gap-2">
             <h1 className="text-2xl font-bold">{task.taskTitle}</h1>
             <p>{task.taskDescription}</p>
           </div>
-          <div className="flex justify-end h-1/2 items-center w-full">
-            <TaskStatus task={task} onTaskUpdate={onTaskUpdate} className=""/>
+          <div className="flex h-1/2 w-full items-center justify-end">
+            <TaskStatus task={task} onTaskUpdate={onTaskUpdate} className="" />
           </div>
         </div>
 
