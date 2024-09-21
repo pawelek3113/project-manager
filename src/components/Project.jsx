@@ -5,9 +5,9 @@ import TASK_STATUSES from "../constants/taskStatuses";
 import PlusIcon from "../icons/PlusIcon";
 import TrashIcon from "../icons/TrashIcon";
 import Button from "./Button";
+import DeletionModal from "./DeletionModal";
 import Error from "./Error";
 import Input from "./Input";
-import Modal from "./Modal";
 import Task from "./Task";
 import TaskListItem from "./TaskListItem";
 
@@ -113,31 +113,13 @@ export default function Project({
           description="All required fields must be filled out before saving."
         />
 
-        <Modal custom ref={projectDeletionModal}>
-          <>
-            <div className="w-full text-center">
-              <h1 className="text-lg font-bold leading-10 tracking-tight">
-                You're about to delete your project
-              </h1>
-              <h2>Do you want to proceed?</h2>
-            </div>
-            <div className="w-3/4">
-              <form method="dialog">
-                <div className="flex flex-row justify-around">
-                  <Button text="No" type="submit" />
-                  <Button
-                    text="Yes"
-                    type="submit"
-                    className="border-red-800 font-bold text-red-800"
-                    onClick={() => {
-                      onDelete(project);
-                    }}
-                  />
-                </div>
-              </form>
-            </div>
-          </>
-        </Modal>
+        <DeletionModal
+          ref={projectDeletionModal}
+          name="your project"
+          proceedCb={() => {
+            onDelete(project);
+          }}
+        />
 
         {selectedTask ? (
           <Task
