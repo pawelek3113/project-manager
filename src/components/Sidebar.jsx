@@ -1,4 +1,3 @@
-import { useState } from "react";
 import HideMenuIcon from "../icons/HideMenuIcon";
 import LogoIcon from "../icons/LogoIcon";
 import MenuIcon from "../icons/MenuIcon";
@@ -11,13 +10,12 @@ export default function Sidebar({
   onSelect,
   projects,
   selectedProjectId,
+  sidebarSettings,
 }) {
-  const [sidebarVisible, setsidebarVisible] = useState(true);
+  const { sidebarVisibility, setSidebarVisibility } = sidebarSettings;
 
   function handleHideMenu() {
-    setsidebarVisible((prevsidebarVisible) =>
-      prevsidebarVisible === true ? false : true,
-    );
+    setSidebarVisibility((prevSidebarVisibility) => !prevSidebarVisibility);
   }
 
   const projectsList = projects.map((project) => (
@@ -26,26 +24,26 @@ export default function Sidebar({
       onSelect={onSelect}
       key={project.id}
       selected={project.id === selectedProjectId ? true : ""}
-      long={sidebarVisible}
+      long={sidebarVisibility}
     />
   ));
 
   return (
     <aside
-      className={`min-h-screen bg-slate-900/85 ${sidebarVisible ? "md:w-[288px]" : "w-[64px]"} max-md:hidden md:py-6 ${sidebarVisible ? "md:p-6" : "md:p-2"} flex flex-col items-center md:gap-6`}
+      className={`fixed top-0 min-h-screen bg-slate-900/85 backdrop-blur-sm ${sidebarVisibility ? "md:w-[288px]" : "w-[64px]"} max-md:hidden md:py-6 ${sidebarVisibility ? "md:p-6" : "md:p-2"} flex flex-col items-center md:gap-6`}
     >
       <div className="flex flex-row items-center gap-4">
         <Button
           onClick={handleHideMenu}
           icon={
-            sidebarVisible ? (
+            sidebarVisibility ? (
               <HideMenuIcon width="20" height="20" />
             ) : (
               <MenuIcon width="20" height="20" />
             )
           }
         />
-        {sidebarVisible && (
+        {sidebarVisibility && (
           <>
             <h2 className="text-nowrap text-xl leading-10">Project Manager</h2>
             <LogoIcon />
@@ -53,7 +51,7 @@ export default function Sidebar({
         )}
       </div>
       <Button
-        text={sidebarVisible && "Add project"}
+        text={sidebarVisibility && "Add project"}
         icon={<PlusIcon width="20" height="20" />}
         onClick={onStartAddProject}
       />

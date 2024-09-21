@@ -13,9 +13,12 @@ function App() {
   });
 
   const [projectEditing, setProjectEditing] = useState(false);
+  const [sidebarVisibility, setSidebarVisibility] = useState(false);
+
   const [addingProjectTask, setAddingProjectTask] = useState(false);
 
   function handleStartAddProject() {
+    setSidebarVisibility(false);
     setProjectsState((prevProjectsState) => {
       return { ...prevProjectsState, selectedProjectId: null };
     });
@@ -27,6 +30,7 @@ function App() {
   }
 
   function handleAddProject(projectData) {
+    setSidebarVisibility(false);
     setProjectsState((prevProjectsState) => {
       const projectId = uuid();
       const newProject = { ...projectData, id: projectId };
@@ -40,6 +44,7 @@ function App() {
   }
 
   function handleSelect(id) {
+    setSidebarVisibility(false);
     setProjectEditing(false);
     setAddingProjectTask(false);
     setProjectsState((prevProjectsState) => {
@@ -120,13 +125,23 @@ function App() {
   return (
     <main className="flex h-full w-full flex-col gap-4 bg-slate-800 text-white md:flex-row md:gap-10">
       <Navbar onStartAddProject={handleStartAddProject} />
-      <Sidebar
-        selectedProjectId={projectsState.selectedProjectId}
-        onStartAddProject={handleStartAddProject}
-        projects={projectsState.projects}
-        onSelect={handleSelect}
-      />
-      <div className="flex w-full flex-col gap-2">{content}</div>
+      <div className="min-h-screen w-full">
+        <Sidebar
+          selectedProjectId={projectsState.selectedProjectId}
+          onStartAddProject={handleStartAddProject}
+          projects={projectsState.projects}
+          onSelect={handleSelect}
+          sidebarSettings={{ sidebarVisibility, setSidebarVisibility }}
+        />
+        <div
+          className="flex w-full flex-col gap-2 pl-20"
+          onClick={() => {
+            setSidebarVisibility(false);
+          }}
+        >
+          {content}
+        </div>
+      </div>
     </main>
   );
 }
