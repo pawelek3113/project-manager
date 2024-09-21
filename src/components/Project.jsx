@@ -82,17 +82,17 @@ export default function Project({
         className="flex grow flex-col gap-8 px-4 py-6 outline-none"
         tabIndex={0}
         onKeyDown={(e) => {
-          e.key === "Enter" && editing
-            ? (function () {
-                setEditing(false);
-                onEditSave({
-                  ...project,
-                  title: title.current.value,
-                  description: description.current.value,
-                  dueDate: dueDateRef.current.value,
-                });
-              })()
-            : "";
+          if (editing && e.ctrlKey && e.key === "Enter") {
+            (function () {
+              setEditing(false);
+              onEditSave({
+                ...project,
+                title: title.current.value,
+                description: description.current.value,
+                dueDate: dueDateRef.current.value,
+              });
+            })();
+          }
         }}
       >
         <Error
@@ -121,15 +121,15 @@ export default function Project({
           />
         )}
 
-        <div className="flex flex-row gap-4">
-          <div className="flex items-center">
+        <div className="flex w-2/3 flex-row gap-4">
+          <div className="flex flex-none items-center">
             <projectIcon.icon width="72" height="72" />
           </div>
 
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-1 flex-col gap-3">
             {!editing ? (
               <h1
-                className={`text-5xl font-bold tracking-tight ${!project.title && "italic text-slate-400"}`}
+                className={`hyphens-auto text-wrap break-words text-5xl font-bold tracking-tight ${!project.title && "italic text-slate-400"}`}
               >
                 {project.title ? project.title : "Title's not specified"}
               </h1>
@@ -158,7 +158,7 @@ export default function Project({
                   label="Due Date"
                   type="date"
                   defaultValue={project.dueDate}
-                  className="w-1/5"
+                  className="w-1/3"
                 />
               )}
             </div>
@@ -167,7 +167,7 @@ export default function Project({
 
         {!editing ? (
           <p
-            className={`w-2/3 text-pretty ${!project.description && "italic text-slate-400"}`}
+            className={`w-2/3 hyphens-auto whitespace-pre-wrap text-pretty break-words ${!project.description && "italic text-slate-400"}`}
           >
             {project.description
               ? project.description
