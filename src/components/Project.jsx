@@ -3,9 +3,11 @@ import { v4 as uuid } from "uuid";
 import PROJECT_ICONS from "../constants/projectIcons";
 import TASK_STATUSES from "../constants/taskStatuses";
 import PlusIcon from "../icons/PlusIcon";
+import TrashIcon from "../icons/TrashIcon";
 import Button from "./Button";
 import Error from "./Error";
 import Input from "./Input";
+import Modal from "./Modal";
 import Task from "./Task";
 import TaskListItem from "./TaskListItem";
 
@@ -18,6 +20,7 @@ export default function Project({
   setAddingTask,
   onTaskAdd,
   onTaskUpdate,
+  onDelete
 }) {
   const [selectedTask, setSelectedTask] = useState(null);
 
@@ -28,6 +31,7 @@ export default function Project({
   const taskDescription = useRef();
   const error = useRef();
   const taskModal = useRef();
+  const projectDeletionModal = useRef();
 
   function handleTaskSave() {
     if (taskTitle.current.value && taskDescription.current.value) {
@@ -100,6 +104,30 @@ export default function Project({
           title="Unable to save"
           description="All required fields must be filled out before saving."
         />
+
+        <Modal custom ref={projectDeletionModal}>
+          <>
+            <div className="w-full text-center">
+              <h1 className="text-lg font-bold leading-10 tracking-tight">
+                You're about to delete your project
+              </h1>
+              <h2 className="">Do you want to proceed?</h2>
+            </div>
+            <div className="w-3/4">
+              <form method="dialog">
+                <div className="flex flex-row justify-around">
+                  <Button text="No" type="submit" />
+                  <Button
+                    text="Yes"
+                    type="submit"
+                    className="border-red-800 font-bold text-red-800"
+                    onClick={() => {onDelete(project)}}
+                  />
+                </div>
+              </form>
+            </div>
+          </>
+        </Modal>
 
         {selectedTask ? (
           <Task
@@ -205,7 +233,7 @@ export default function Project({
                   variant="ghost"
                   placeholder="Title"
                   ref={taskTitle}
-                  autocomplete="off"
+                  autoComplete="off"
                 />
                 <Input
                   variant="ghost"
@@ -238,29 +266,38 @@ export default function Project({
         </div>
       </article>
 
-      <article className="pr-5 pt-5">
-        {!editing ? (
+      <article className="w-36 pr-5 pt-5">
+        <div className="flex flex-row justify-between">
           <Button
-            text="Edit"
+            className="border-red-800"
+            icon={<TrashIcon width="20" height="20" color="#991b1b" />}
             onClick={() => {
-              setEditing(true);
+              projectDeletionModal.current.open();
             }}
-            className="border-0"
           />
-        ) : (
-          <Button
-            text="Save"
-            onClick={() => {
-              onEditSave({
-                ...project,
-                title: title.current.value,
-                description: description.current.value,
-                dueDate: dueDateRef.current.value,
-              });
-            }}
-            className="border-0"
-          />
-        )}
+          {!editing ? (
+            <Button
+              text="Edit"
+              onClick={() => {
+                setEditing(true);
+              }}
+              className="border-0"
+            />
+          ) : (
+            <Button
+              text="Save"
+              onClick={() => {
+                onEditSave({
+                  ...project,
+                  title: title.current.value,
+                  description: description.current.value,
+                  dueDate: dueDateRef.current.value,
+                });
+              }}
+              className="border-0"
+            />
+          )}
+        </div>
       </article>
     </section>
   );
