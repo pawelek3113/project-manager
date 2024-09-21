@@ -29,7 +29,7 @@ export default function TaskStatus({ task, onTaskUpdate, className }) {
         e.stopPropagation();
       }}
       onChange={(e) => handleStatusChange(e)}
-      className={`rounded-lg text-center text-sm ${selectedStatus === "Not started" ? "bg-transparent" : selectedStatus === "In progress" ? "bg-yellow-500" : "bg-green-400"} ${className}`}
+      className={`h-5 rounded-lg text-center text-sm ${selectedStatus === "Not started" ? "bg-transparent" : selectedStatus === "In progress" ? "bg-yellow-500" : "bg-green-400"} ${className}`}
     >
       {statuses}
     </select>
