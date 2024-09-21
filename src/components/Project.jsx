@@ -62,6 +62,13 @@ export default function Project({
     onTaskUpdate({ ...project, tasks: [...updatedTasks] });
   }
 
+  function handleTaskDeletion(taskData) {
+    const updatedTasks = project.tasks.filter(
+      (t) => t.taskId !== taskData.taskId,
+    );
+    onTaskUpdate({ ...project, tasks: [...updatedTasks] });
+  }
+
   const tasksList = project.tasks.map((t) => (
     <TaskListItem
       key={t.taskId}
@@ -71,6 +78,7 @@ export default function Project({
         setSelectedTask(t);
         taskModal.current.open();
       }}
+      onTaskDelete={handleTaskDeletion}
     />
   ));
 
