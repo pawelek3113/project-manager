@@ -286,8 +286,8 @@ export default function Project({
         </div>
       </article>
 
-      <article className="w-36 pr-5 pt-5">
-        <div className="flex flex-row justify-between">
+      <article className="w-36 pr-5">
+        <div className="sticky top-0 flex flex-row justify-between pt-5">
           <Button
             className="border-red-800"
             icon={<TrashIcon width="20" height="20" color="#991b1b" />}
