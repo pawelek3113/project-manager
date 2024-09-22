@@ -73,18 +73,28 @@ export default function Project({
     onTaskUpdate({ ...project, tasks: [...updatedTasks] });
   }
 
-  const tasksList = project.tasks.map((t) => (
-    <TaskListItem
-      key={t.taskId}
-      task={t}
-      onTaskUpdate={handleTaskUpdate}
-      onClick={() => {
-        setSelectedTask(t);
-        taskModal.current.open();
-      }}
-      onTaskDelete={handleTaskDeletion}
-    />
-  ));
+  const completedTasks = [];
+
+  const tasksList = project.tasks.map((t) => {
+    let task = (
+      <TaskListItem
+        key={t.taskId}
+        task={t}
+        onTaskUpdate={handleTaskUpdate}
+        onClick={() => {
+          setSelectedTask(t);
+          taskModal.current.open();
+        }}
+        onTaskDelete={handleTaskDeletion}
+      />
+    );
+
+    if (t.taskStatus === TASK_STATUSES.done) {
+      completedTasks.push(task);
+    } else {
+      return task;
+    }
+  });
 
   const dueDate = new Date(project.dueDate);
 
@@ -254,7 +264,19 @@ export default function Project({
           )}
           <div className="w-full max-w-xl">
             {project.tasks.length !== 0 ? (
-              <ul>{tasksList.reverse()}</ul>
+              <div className="flex flex-col gap-4">
+                <ul>{tasksList.reverse()}</ul>
+                {completedTasks.length !== 0 ? (
+                  <div>
+                    <h2 className="text-xl font-bold uppercase tracking-tighter">
+                      Completed tasks ({completedTasks.length})
+                    </h2>
+                    <ul>{completedTasks.reverse()}</ul>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
             ) : addingTask ? (
               ""
             ) : (
