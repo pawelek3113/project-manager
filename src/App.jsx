@@ -30,6 +30,7 @@ function App() {
   }
 
   function handleAddProject(projectData) {
+    setProjectEditing(false);
     setSidebarVisibility(false);
     setProjectsState((prevProjectsState) => {
       const projectId = uuid();

@@ -16,7 +16,7 @@ const Error = forwardRef(function Error({ title, description }, ref) {
   });
 
   return (
-    <Modal ref={modal} buttonCaption="Okay" className="h-1/5">
+    <Modal ref={modal} buttonCaption="Okay" className="h-52">
       <h1 className="text-lg font-bold tracking-tight text-red-600">{title}</h1>
       <p className="text-sm">{description}</p>
     </Modal>
