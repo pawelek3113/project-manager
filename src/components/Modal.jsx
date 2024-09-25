@@ -22,9 +22,17 @@ const Modal = forwardRef(function Modal(
   return createPortal(
     <dialog
       ref={dialog}
-      className={`rounded-lg border bg-slate-800 px-20 pb-8 pt-10 text-white shadow backdrop:bg-black/70 ${className}`}
+      className={`rounded-lg border bg-slate-800 text-white shadow backdrop:bg-black/70 ${className}`}
+      onClick={() => {
+        dialog.current.close();
+      }}
     >
-      <div className="flex h-full w-full flex-col items-center justify-between gap-6">
+      <div
+        className="flex h-full w-full flex-col items-center justify-between gap-6 px-20 pb-8 pt-10"
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
         {!custom ? (
           <>
             <div className="flex w-full flex-col items-center gap-2">
