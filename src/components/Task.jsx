@@ -40,21 +40,19 @@ const Task = forwardRef(function Task(
 
       <Modal ref={modal} custom className="h-3/4 w-1/2">
         <div className="flex h-full w-full flex-col justify-between gap-3">
-          <div className="flex flex-row items-center justify-between">
-            <div className="flex w-full flex-col gap-2">
-              <h1 className="text-2xl font-bold">{task.taskTitle}</h1>
-              <p>{task.taskDescription}</p>
+          <div className="flex w-full flex-col gap-5">
+            <div className="flex w-full flex-row items-center justify-between">
+              <h1 className="line-clamp-6 grow break-words pr-5 text-2xl font-bold">
+                {task.taskTitle}
+              </h1>
+              <div className="flex h-1/2 items-center">
+                <TaskStatus task={task} onTaskUpdate={onTaskUpdate} />
+              </div>
             </div>
-            <div className="flex h-1/2 w-full items-center justify-end">
-              <TaskStatus
-                task={task}
-                onTaskUpdate={onTaskUpdate}
-                className=""
-              />
-            </div>
+            <p className="break-words">{task.taskDescription}</p>
           </div>
 
-          <div className="flex w-full">
+          <div className="sticky bottom-3 mx-auto flex w-4/5 rounded-xl px-5 py-3 backdrop-blur-md">
             <form method="dialog" className="w-full">
               <div className="flex w-full flex-row justify-between">
                 <Button
