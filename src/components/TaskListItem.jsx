@@ -34,15 +34,15 @@ export default function TaskListItem({
         {...props}
       >
         <div
-          className={`flex w-9/12 flex-col ${isDone ? "text-gray-400 line-through" : ""}`}
+          className={`flex w-7/12 flex-col pr-3 ${isDone ? "text-gray-400 line-through" : ""}`}
         >
-          <h1 className="max-w-full truncate text-lg font-bold tracking-tight">
+          <h1 className="max-w-full truncate text-ellipsis text-lg font-bold tracking-tight">
             {task.taskTitle}
           </h1>
-          <p className="line-clamp-2">{task.taskDescription}</p>
+          <p className="line-clamp-2 text-ellipsis">{task.taskDescription}</p>
         </div>
 
-        <div className="flex flex-row items-center gap-5">
+        <div className="flex flex-row items-center gap-5 pr-3">
           <TaskStatus task={task} onTaskUpdate={onTaskUpdate} />
           <Button
             onClick={(e) => {
